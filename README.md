@@ -469,21 +469,37 @@ sudo sysctl -p /etc/sysctl.d/99-forward.conf
 cat /proc/sys/net/ipv4/ip_forward
 ```
 
-#### 8.6 Criar alias para o OpenVPN
+#### 8.6 Criar o wrapper do OpenVPN
 
-O alias injeta o hook automaticamente em qualquer `.ovpn`, sem precisar editar cada arquivo:
+O wrapper substitui o comando `openvpn` do sistema por um script que injeta o hook automaticamente em **qualquer** arquivo `.ovpn` — sem precisar editar nenhum arquivo de configuração.
 
 ```bash
-# Para Zsh (padrão no Kali)
-echo "alias openvpn='sudo openvpn --script-security 2 --up /etc/openvpn/hotspot-vpn-hook.sh --down /etc/openvpn/hotspot-vpn-hook.sh --config'" >> ~/.zshrc
-source ~/.zshrc
+# Renomear o openvpn original
+sudo mv /usr/sbin/openvpn /usr/sbin/openvpn.real
+
+# Criar o wrapper
+sudo nano /usr/local/bin/openvpn
 ```
 
 ```bash
-# Para Bash
-echo "alias openvpn='sudo openvpn --script-security 2 --up /etc/openvpn/hotspot-vpn-hook.sh --down /etc/openvpn/hotspot-vpn-hook.sh --config'" >> ~/.bashrc
-source ~/.bashrc
+#!/bin/bash
+
+if [[ "$1" == --* ]]; then
+    exec /usr/sbin/openvpn.real "$@"
+fi
+
+exec /usr/sbin/openvpn.real \
+    --config "$@" \
+    --script-security 2 \
+    --up /etc/openvpn/hotspot-vpn-hook.sh \
+    --down /etc/openvpn/hotspot-vpn-hook.sh
 ```
+
+```bash
+sudo chmod +x /usr/local/bin/openvpn
+```
+
+> A partir daqui você continua usando `openvpn arquivo.ovpn` normalmente — o wrapper intercepta a chamada e injeta o hook automaticamente. Funciona com qualquer `.ovpn` do ProtonVPN.
 
 #### 8.7 Testar a integração
 
@@ -594,6 +610,12 @@ openvpn ~/Documents/Ferramentas/VPN/us-co-21-tor.protonvpn.tcp.ovpn
 
 /etc/openvpn/
 └── hotspot-vpn-hook.sh               # Hook VPN (up/down)
+
+/usr/sbin/
+└── openvpn.real                      # OpenVPN original (renomeado)
+
+/usr/local/bin/
+└── openvpn                           # Wrapper — injeta o hook em qualquer .ovpn
 
 /etc/systemd/system/
 └── hotspot-auto.service              # Serviço de auto-inicialização
