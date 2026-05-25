@@ -166,7 +166,12 @@ Crie ou edite o arquivo de conexão:
 sudo nano /etc/NetworkManager/system-connections/Hotspot.nmconnection
 ```
 
-> 💡 Gere um UUID único para sua instalação com `uuidgen` e substitua o valor abaixo.
+> 💡 Gere um UUID único para sua instalação e substitua o valor abaixo:
+> ```bash
+> uuidgen
+> # Exemplo de saída: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+> # Copie o resultado e cole no campo uuid= abaixo
+> ```
 
 Conteúdo:
 
