@@ -149,7 +149,7 @@ Clone este repositório ou copie os arquivos manualmente:
 ```bash
 # Via git — clone direto no diretório criado na etapa anterior
 cd ~/Documents/Ferramentas/wifi/MeuHotspot
-git clone https://github.com/SEU_USUARIO/hackinglabsec-hotspot.git .
+git clone https://github.com/coliovacruz/Hotspot_RaspBerry_VPN.git .
 
 # Dar permissão de execução
 chmod +x hotspot_auto.sh
