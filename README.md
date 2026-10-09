@@ -1,3 +1,14 @@
+# 📡 HackingLabSec Hotspot — Raspberry Pi Secure Gateway
+
+![Platform](https://img.shields.io/badge/Platform-Raspberry%20Pi%20%7C%20Kali%20Linux-blue?logo=raspberrypi)
+![Security](https://img.shields.io/badge/Focus-Network%20Security%20%26%20Privacy-red)
+![Networking](https://img.shields.io/badge/Networking-NetworkManager%20%7C%20OpenVPN%20%7C%20IPTables-orange)
+![License](https://img.shields.io/badge/License-MIT%20%2F%20Educational-green)
+
+> **Resumo Executivo:** Solução de infraestrutura e segurança de redes desenvolvida para transformar o Raspberry Pi em um *Secure Gateway / Hotspot Wi-Fi* automatizado. O sistema integra roteamento dinâmico via `iptables`, gerenciamento de interfaces dual-band (`wlan0`/`wlan1`), reservas DHCP personalizadas e um *wrapper* customizado para tunelamento anonimizado de tráfego via VPN (ProtonVPN) com suporte a isolamento de rede e auto-inicialização no boot via `systemd`.
+
+---
+
 # 📡 HackingLabSec Hotspot
 
 Sistema completo de hotspot WiFi para Raspberry Pi com Kali Linux — com auto-inicialização, reservas DHCP por MAC, integração com ProtonVPN e múltiplos modos de operação.
